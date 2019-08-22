@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, HashRouter, Switch, Route } from 'react-router-dom';
+import Splash from './components/pages/Splash';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+	const routes = (
+		<Switch>
+			<Route
+				exact
+				path="/"
+				component={Splash}
+			/>
+		</Switch>
+	);
+	return routes;
 }
 
-export default App;
+const withHashRouter = (C) => {
+	return (
+		<HashRouter>
+			{C}
+		</HashRouter>
+	);
+}
+
+const withBrowserRouter = (C) => {
+	return (
+		<Router>
+			{C}
+		</Router>
+	);
+}
+
+const withRouter = (C) => {
+	return window.location.indexOf('github.io') > -1 ? withHashRouter(C) : withBrowserRouter(C);
+}
+
+const appWithRouter = withRouter(App);
+
+export default appWithRouter;
